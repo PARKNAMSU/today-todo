@@ -11,7 +11,7 @@ const TTHeaderTop = styled.div`
   position: fixed;
   background: #f0b495;
   padding: 10px 0;
-
+  z-index: 1;
   top: 0;
 `;
 
@@ -87,10 +87,10 @@ const TTHeader = () => {
           <Link to="/">
             <TTA className="headerButton">home</TTA>
           </Link>
-          <Link to="/path1">
+          <Link to="/todo/create">
             <TTA className="headerButton">todo</TTA>
           </Link>
-          <Link to="/path2">
+          <Link to="/todo/list">
             <TTA className="headerButton">today</TTA>
           </Link>
           <Link to="/path3">

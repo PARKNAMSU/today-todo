@@ -5,8 +5,10 @@ import SignIn from "./pages/signin";
 import styled from "styled-components";
 import SignUp from "./pages/signup";
 import FindPass from "./pages/passwordFInd";
+import ShowTest from "./pages/todo/test";
 import { Routes, Route, BrowserRouter, Link, Router } from "react-router-dom";
-
+import CreateTodo from "./pages/todo/createTodo";
+import TodoList from "./pages/todo/todoList";
 const AppContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -24,6 +26,8 @@ function App() {
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
           <Route path="/findpass" element={<FindPass />}></Route>
+          <Route path="/todo/create" element={<CreateTodo />}></Route>
+          <Route path="/todo/list" element={<TodoList />}></Route>
         </Routes>
       </BrowserRouter>
     </AppContainer>

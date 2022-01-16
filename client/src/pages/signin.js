@@ -70,14 +70,6 @@ const SignInBottom = styled.div`
     }
   }
 `;
-const EmailBox = styled.div`
-  display: flex;
-  width: 80%;
-  justify-content: space-between;
-  & > input {
-    width: 70%;
-  }
-`;
 const SignIn = () => {
   let navigate = useNavigate();
   return (

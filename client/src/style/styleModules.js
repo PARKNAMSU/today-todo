@@ -1,8 +1,27 @@
 import styled, { css } from "styled-components";
 
+const TodoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    ${(props) => (props.isTodo ? "" : "padding-top: 70px;")}
+  }
+`;
+const TodoBox = styled.div`
+  display: flex;
+  width: ${(props) => props.width || "500px"};
+  height: ${(props) => props.height || "550px"};
+  background-color: ${(props) => props.bgColor || "#f5cfbc"};
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  color: #634b3e;
+`;
 const TTButton = styled.button`
   display: inline-block;
-  padding: 1.5em 2.6em;
+  padding: ${(props) => props.padding || "1.5em 2.6em"};
   border-radius: 0;
   color: #b2876f;
   margin-top: ${(props) => props.marginTop || "2rem"};
@@ -58,4 +77,4 @@ const EmailBoxButton = styled(TTButton)`
   padding: 0.5em;
   margin-left: 0.5em;
 `;
-export { TTButton, EmailBox, EmailBoxButton };
+export { TTButton, EmailBox, EmailBoxButton, TodoContainer, TodoBox };

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { TTButton } from "../style/styleModules";
 import TodoIcon from "../images/list.png";
 import listIcon from "../images/listing.png";
 import statsIcon from "../images/stats.png";
+import { useNavigate } from "react-router-dom";
+import TTModal from "../components/modal";
 const HomeContainer = styled.div`
   width: 100%;
   height: 450px;
@@ -83,15 +85,40 @@ const HomeBottomBox = styled.div`
   }
 `;
 const Home = () => {
+  let navigate = useNavigate();
+  const [isModal, setIsModal] = useState(false);
+  const [modalContent, setModalContent] =
+    useState("로그인 상태에서 이용 가능합니다.");
+  const [modalTitle, setModalTitle] = useState("로그인 요청");
+  const handleClickModal = () => {
+    setIsModal(true);
+  };
+  const modalCancelHandle = () => {
+    setIsModal(false);
+  };
   return (
     <div>
+      {isModal ? (
+        <TTModal
+          cancelHandle={modalCancelHandle}
+          content={modalContent}
+          title={modalTitle}
+        />
+      ) : (
+        ""
+      )}
       <HomeContainer paddingTop={"100px"} bgk={"#f0b495"}>
         <HomeTitle>오늘의 할일을 작성해 보세요!</HomeTitle>
         <HomeSubTitle>
           하루동인 할 일을 계획적으로 작성해 보세요. 하루를 계획적으로 보내면
           습관이 됩니다!
         </HomeSubTitle>
-        <TTButton fontSize={"15px"} marginTop={""} marginLeft={"0px"}>
+        <TTButton
+          fontSize={"15px"}
+          marginTop={""}
+          marginLeft={"0px"}
+          onClick={navigate.bind(null, "/todo/create")}
+        >
           Todo 생성
         </TTButton>
       </HomeContainer>
@@ -118,7 +145,12 @@ const Home = () => {
           <HomeSubTitle>
             햔재의 나를 위해 과거에 내가 계획을 얼마나 수행했나 확인해 보세요!
           </HomeSubTitle>
-          <TTButton fontSize={"15px"} marginTop={""} marginLeft={"0px"}>
+          <TTButton
+            fontSize={"15px"}
+            marginTop={""}
+            marginLeft={"0px"}
+            onClick={handleClickModal}
+          >
             과거 기록
           </TTButton>
         </HomeBottomBox>

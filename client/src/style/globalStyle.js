@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
     a{
         text-decoration: none;
     }
-    input{
+    input, select,textarea{
         line-height: normal;
         padding: 0.8em 0.5em;
         font-family: inherit;
@@ -40,9 +40,37 @@ const GlobalStyle = createGlobalStyle`
         background-color: #f5f3ef;
         font-weight: bold;
         letter-spacing: 1px;
-        text-transform: uppercase;
         text-decoration: none;
 
+    }
+    h1 {
+        font-size:24px;
+    }
+    h2 {
+        font-size:20px;
+    }
+    h3 {
+        font-size:18px;
+    }
+    h4 {
+        font-size:16px;
+    }
+    p {
+        font-size:12px;
+    }
+    tr, td, th{
+        border: thin solid #b2876f;
+        font-size:12px;
+    }
+    td, th{
+        padding:0.5em 1em;
+    }
+    blockquote{
+        border: 1px solid #b2876f;
+        padding:1.5em 2em;
+        border-left: 10px solid #b2876f;
+        width:80%;
+        color: #9c4316;
     }
 `;
 export default GlobalStyle;
