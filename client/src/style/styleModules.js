@@ -5,9 +5,9 @@ const TTButton = styled.button`
   padding: 1.5em 2.6em;
   border-radius: 0;
   color: #b2876f;
-  margin-top: 2rem;
+  margin-top: ${(props) => props.marginTop || "2rem"};
+  margin-left: ${(props) => props.marginLeft || "2rem"};
   font-weight: bold;
-  font-size: 0.8rem;
   letter-spacing: 1px;
   text-transform: uppercase;
   text-decoration: none;
@@ -15,7 +15,8 @@ const TTButton = styled.button`
   transition: all 250ms ease;
   border: 0;
   outline: 0;
-  background-color: white;
+  font-size: ${(props) => props.fontSize || "0.8rem"};
+  background-color: #f5f3ef;
   &:before,
   &:after {
     content: "";
@@ -41,5 +42,20 @@ const TTButton = styled.button`
     }
   }
 `;
-
-export { TTButton };
+const EmailBox = styled.div`
+  display: flex;
+  width: 83%;
+  justify-content: left;
+  align-items: center;
+  & > input {
+    width: 68%;
+    display: flex;
+  }
+`;
+const EmailBoxButton = styled(TTButton)`
+  display: flex;
+  font-size: 15px;
+  padding: 0.5em;
+  margin-left: 0.5em;
+`;
+export { TTButton, EmailBox, EmailBoxButton };
