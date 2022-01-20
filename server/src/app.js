@@ -16,7 +16,7 @@ const statsRouter = require('./routers/statsRouter');
 
 mongoose
     .connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Successfully connected to mongodb'))
+    .then(() => console.log('Successfully connected to mongodb!'))
     .catch((e) => console.error(e));
 
 app.use(cors({ credentials: true, origin: true }));
