@@ -1,5 +1,40 @@
 import styled, { css } from "styled-components";
 
+const TTA = styled.button`
+  color: #634b3e;
+  padding: 7px 25px;
+  background-color: inherit;
+  border: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: 0.25s;
+  &:hover {
+    color: #e3ab8d;
+    background-color: #634b3e;
+    transition: 0.25s;
+  }
+  ${(props) =>
+    props.isSignin
+      ? `
+  color: #e3ab8d;
+  background-color: #634b3e;
+  transition: 0.25s;
+  border-radius:3px;
+  display: inline-flex;
+  margin-left: 28px;
+  &:hover {
+    color: #634b3e;
+    background-color: inherit;
+    transition: 0.25s;
+  }
+  `
+      : ""}
+  @media screen and (max-width: 968px) {
+    margin-left: 5px;
+  }
+`;
 const TodoContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -8,6 +43,14 @@ const TodoContainer = styled.div`
   @media screen and (max-width: 768px) {
     ${(props) => (props.isTodo ? "" : "padding-top: 70px;")}
   }
+`;
+const TodoContainerHorizen = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  width: 100%;
 `;
 const TodoBox = styled.div`
   display: flex;
@@ -77,4 +120,12 @@ const EmailBoxButton = styled(TTButton)`
   padding: 0.5em;
   margin-left: 0.5em;
 `;
-export { TTButton, EmailBox, EmailBoxButton, TodoContainer, TodoBox };
+export {
+  TTButton,
+  EmailBox,
+  EmailBoxButton,
+  TodoContainer,
+  TodoBox,
+  TTA,
+  TodoContainerHorizen,
+};

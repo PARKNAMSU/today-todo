@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { TTButton, TodoContainer, TodoBox } from "../../style/styleModules";
 import { useNavigate } from "react-router-dom";
 import MarkdownView from "react-showdown";
+const customMethod = require("../../method/custom");
 const TodoCreateCard = styled.div`
   width: 100%;
   border: 2px solid #b2876f;
@@ -81,7 +82,11 @@ const CreateCard = () => {
       </div>
       <TimeDiv>
         <p>날짜:</p>
-        <TimeInput type="date" onChange={dateHandle}></TimeInput>
+        <TimeInput
+          type="date"
+          onChange={dateHandle}
+          min={customMethod.dateToString(new Date(), "-", false)}
+        ></TimeInput>
       </TimeDiv>
       <input type="text" placeholder="title" onKeyUp={titleKeyUpHandle}></input>
       <textarea

@@ -45,15 +45,19 @@ const GlobalStyle = createGlobalStyle`
     }
     h1 {
         font-size:24px;
+        color:#74513e ;
     }
     h2 {
         font-size:20px;
+        color: #74513e;
     }
     h3 {
         font-size:18px;
+        color: #74513e;
     }
     h4 {
         font-size:16px;
+        color: #74513e;
     }
     p {
         font-size:12px;
@@ -71,6 +75,9 @@ const GlobalStyle = createGlobalStyle`
         border-left: 10px solid #b2876f;
         width:80%;
         color: #9c4316;
+    }
+    ol , ul{
+        list-style:auto;
     }
 `;
 export default GlobalStyle;

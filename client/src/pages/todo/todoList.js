@@ -4,9 +4,9 @@ import { TTButton, TodoContainer, TodoBox } from "../../style/styleModules";
 import { useNavigate } from "react-router-dom";
 import MarkdownView from "react-showdown";
 import TodoCard from "../../components/todo/todoCard";
-
+import CardModal from "../../components/todo/cardModal";
 const options = { tables: true, emoji: true };
-
+const custom = require("../../method/custom");
 const CardDiv = styled.div``;
 const TodoListBox = styled(TodoBox)`
   @media screen and (max-width: 968px) {
@@ -80,32 +80,43 @@ const TimeInput = styled.input`
   }
 `;
 const TodoList = () => {
-  const [selectDate, setSelectDate] = useState("2021-01-02");
+  const [selectDate, setSelectDate] = useState(
+    custom.dateToString(new Date(), "-", false)
+  );
+  const [isVisibleCard, setIsVisibleCard] = useState(false);
   const dateChangeHandle = (e) => {
     setSelectDate(e.target.value);
   };
+  const cardClickHandle = (isOpen = false) => {
+    setIsVisibleCard(isOpen);
+  };
   return (
     <TodoContainer isTodo={true}>
+      {isVisibleCard ? <CardModal cardClickHandle={cardClickHandle} /> : ""}
       <TodoListBox width={"75%"} height={"100%"} bgColor={"#f5f3ef"}>
         <h1>Todo List {selectDate}</h1>
         <TTADiv isLeft={false}>
           <p>날짜 선택:</p>
-          <TimeInput type="date" onChange={dateChangeHandle}></TimeInput>
+          <TimeInput
+            type="date"
+            onChange={dateChangeHandle}
+            value={selectDate}
+          ></TimeInput>
         </TTADiv>
         <TTADiv isLeft={true}>
           <TTA isSignin={true}>Incomplete</TTA>
           <TTA isSignin={true}>Complete</TTA>
         </TTADiv>
         <CardDiv>
-          <TodoCard></TodoCard>
-          <TodoCard></TodoCard>
-          <TodoCard></TodoCard>
-          <TodoCard></TodoCard>
-          <TodoCard></TodoCard>
-          <TodoCard></TodoCard>
-          <TodoCard></TodoCard> <TodoCard></TodoCard>
-          <TodoCard></TodoCard> <TodoCard></TodoCard> <TodoCard></TodoCard>
-          <TodoCard></TodoCard> <TodoCard></TodoCard>
+          <TodoCard
+            cardClickHandle={cardClickHandle.bind(null, true)}
+          ></TodoCard>
+          <TodoCard
+            cardClickHandle={cardClickHandle.bind(null, true)}
+          ></TodoCard>
+          <TodoCard
+            cardClickHandle={cardClickHandle.bind(null, true)}
+          ></TodoCard>
         </CardDiv>
       </TodoListBox>
     </TodoContainer>

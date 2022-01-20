@@ -93,7 +93,7 @@ const TTHeader = () => {
           <Link to="/todo/list">
             <TTA className="headerButton">today</TTA>
           </Link>
-          <Link to="/path3">
+          <Link to="/todo/stats">
             <TTA className="headerButton">stats</TTA>
           </Link>
           <TTA

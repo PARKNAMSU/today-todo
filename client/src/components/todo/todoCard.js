@@ -14,6 +14,7 @@ const TodoCardBox = styled.div`
   justify-content: space-around;
   flex-direction: column;
   align-items: center;
+  box-shadow: 12px 12px 2px 1px #74513e;
   transition: 0.25s;
   cursor: pointer;
   & > div {
@@ -38,9 +39,9 @@ const ButtonDiv = styled.nav`
     color: #f0b495;
   }
 `;
-const TodoCard = ({ title, hour }) => {
+const TodoCard = ({ title, hour, cardClickHandle }) => {
   return (
-    <TodoCardBox>
+    <TodoCardBox onClick={cardClickHandle}>
       <h2>Typcscript 스터디</h2>
       <div>
         Estimated time:&nbsp;<span> 5h</span>
