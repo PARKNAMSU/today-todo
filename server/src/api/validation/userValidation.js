@@ -15,7 +15,6 @@ class UserValidation {
         try {
             password = await bcrypt.hash(password, Number(env.SALT_ROUND));
             let findUser = await userModel.findOne({ email });
-            console.log(findUser);
             if (findUser) {
                 req.sendData = {
                     status: 400,

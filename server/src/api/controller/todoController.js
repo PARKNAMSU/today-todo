@@ -6,11 +6,19 @@ class TodoController {
         if (!this.Instance) this.Instance = new this();
         return this.Instance;
     }
-    async insertTodo(req, res) {}
-    async updateTodo(req, res) {}
-    async completeTodo(req, res) {}
-    async deleteTodo(req, res) {}
-    async getMyTodo(req, res) {}
+    insertTodo = async (req, res) => {
+        res.status(req.sendData.status).send(req.sendData);
+    };
+    updateTodo = async (req, res, next) => {
+        res.status(req.sendData.status).send(req.sendData);
+    };
+    completeTodo = async (req, res, next) => {
+        res.status(req.sendData.status).send(req.sendData);
+    };
+    deleteTodo = async (req, res, next) => {};
+    getTodo = async (req, res, next) => {
+        res.status(req.sendData.status).send(req.sendData);
+    };
 }
 
 module.exports = TodoController.getInstance();
