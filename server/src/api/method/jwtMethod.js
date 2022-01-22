@@ -1,7 +1,5 @@
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-dotenv.config();
-const { JWT_SECRET_KEY } = process.env;
+const env = require('../../config/envConfig');
 class JwtMethod {
     static Instance = null;
     static getInstance() {
@@ -13,17 +11,16 @@ class JwtMethod {
             if (isRefresh) {
                 await res.cookie(
                     'refreshToken',
-                    jwt.sign(data, JWT_SECRET_KEY),
+                    jwt.sign(data, env.JWT_SECRET_KEY),
                     {
                         maxAge: 60 * 60 * 1000,
                         httpOnly: true,
                         path: '/',
                     },
                 );
-                console.log(res.cookies.refreshToken);
                 return;
             }
-            return jwt.sign(data, JWT_SECRET_KEY, {
+            return jwt.sign(data, env.JWT_SECRET_KEY, {
                 expiresIn: '15m',
                 issuer: 'today-todo',
             });
@@ -34,7 +31,7 @@ class JwtMethod {
     }
     async verifyToken(token, isRefresh) {
         try {
-            let data = await jwt.verify(token, JWT_SECRET_KEY);
+            let data = await jwt.verify(token, env.JWT_SECRET_KEY);
             return {
                 data,
                 message: isRefresh ? 'make new accessToken' : 'ok',

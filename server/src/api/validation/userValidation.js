@@ -1,5 +1,7 @@
 const userModel = require('../../model/user');
 const JwtMethod = require('../method/jwtMethod');
+const bcrypt = require('bcrypt');
+const env = require('../../config/envConfig');
 class UserValidation {
     static Instance = null;
 
@@ -7,48 +9,93 @@ class UserValidation {
         if (!this.Instance) this.Instance = new this();
         return this.Instance;
     }
-    async insertUser(req, res, next) {
+    insertUser = async (req, res, next) => {
         let email = req.params.email;
         let { password, name } = req.body;
-
-        let findUser = await userModel.findOne({ email });
-        console.log(_id);
-        console.log(findUser);
-        if (findUser) {
+        try {
+            password = await bcrypt.hash(password, Number(env.SALT_ROUND));
+            let findUser = await userModel.findOne({ email });
+            console.log(findUser);
+            if (findUser) {
+                req.sendData = {
+                    status: 400,
+                    data: {
+                        message: 'aleady exist',
+                    },
+                };
+                next();
+                return;
+            }
+            await userModel.create({
+                email,
+                password,
+                name,
+            });
             req.sendData = {
-                status: 400,
+                status: 201,
                 data: {
-                    message: 'aleady exist',
+                    message: 'ok',
+                    user: {
+                        email,
+                        name,
+                    },
                 },
             };
             next();
+        } catch (e) {
+            console.log(e);
+            req.sendData = {
+                status: 400,
+                data: {
+                    message: 'invalid access',
+                    err: e,
+                },
+            };
+            next();
+        }
+    };
+    updateUser = async (req, res, next) => {
+        let { email } = req.params;
+        let { password, name, new_password, type } = req.body;
+
+        let findUser = await userModel.findOne({
+            email: req.params.email,
+        });
+        let compare = await bcrypt.compare(password, findUser.password);
+
+        if (!findUser || !compare) {
+            req.status(400).send({ message: 'email or password not correct' });
             return;
         }
-        await userModel.create({
-            email,
-            password,
-            name,
-        });
-        req.sendData = {
-            status: 201,
-            data: {
+        let chgData =
+            type === 'password'
+                ? {
+                      password: bcrypt.hashSync(
+                          new_password,
+                          Number(env.SALT_ROUND),
+                      ),
+                  }
+                : { name };
+
+        await userModel.updateOne({ email }, { ...chgData });
+
+        if (type === 'password') {
+            res.status(200).send({
                 message: 'ok',
-                user: {
-                    email,
-                    name,
-                },
-            },
-        };
-        next();
-    }
-    async updateUser(req, res, next) {}
-    async getUser(req, res, next) {
+            });
+            next();
+            return;
+        }
+        this.getUser(req, res, next);
+    };
+    getUser = async (req, res, next) => {
+        let { password } = req.body;
         if (req.params.email) {
             let findUser = await userModel.findOne({
                 email: req.params.email,
-                password: req.body.password,
             });
-            if (!findUser) {
+            let compare = await bcrypt.compare(password, findUser.password);
+            if (!findUser || !compare) {
                 res.status(400).send({
                     message: 'email or password not correct',
                 });
@@ -82,11 +129,11 @@ class UserValidation {
             req.sendData = { ...verifyData, accessToken };
         } else req.sendData = verifyData;
         next();
-    }
-    async logout(req, res, next) {
+    };
+    logout = async (req, res, next) => {
         res.clearCookie('refreshToken');
         res.status(200).send({ message: 'ok' });
-    }
+    };
 }
 
 module.exports = UserValidation.getInstance();

@@ -11,4 +11,9 @@ userRouter.post(
 userRouter.post('/get/:email', userValidation.getUser, userController.getUser);
 userRouter.get('/get', userValidation.getUser, userController.getUser);
 userRouter.get('/logout', userValidation.logout);
+userRouter.post(
+    '/update/:email',
+    userValidation.updateUser,
+    userController.getUser,
+);
 module.exports = userRouter;
