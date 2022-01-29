@@ -88,8 +88,8 @@ class UserValidation {
         this.getUser(req, res, next);
     };
     getUser = async (req, res, next) => {
-        let { password } = req.body;
         if (req.params.email) {
+            let { password } = req.body;
             let findUser = await userModel.findOne({
                 email: req.params.email,
             });

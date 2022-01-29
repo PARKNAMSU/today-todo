@@ -69,7 +69,24 @@ class TodoValidation {
         await todoModel.updateOne({ _id }, { isFinish: true });
         next();
     };
-    deleteTodo = async (req, res, next) => {};
+    deleteTodo = async (req, res, next) => {
+        let { _id } = req.params;
+        let find = await this.validById(_id, res);
+        console.log(find);
+        if (find) {
+            await todoModel.deleteOne({ _id });
+            req.sendData = {
+                message: 'ok',
+                status: 200,
+            };
+        } else {
+            req.sendData = {
+                message: 'id not exist',
+                status: 400,
+            };
+        }
+        next();
+    };
     getTodo = async (req, res, next) => {
         let { _id } = req.params;
         let find = await this.validById(_id, res);
@@ -88,7 +105,27 @@ class TodoValidation {
         }
         next();
     };
-    getTodoList = async (req, res, next) => {};
+    getTodoList = async (req, res, next) => {
+        let { date, isFinish } = req.body;
+        let findList = await todoModel.find({
+            date,
+            user_email: req.params.email,
+            isFinish,
+        });
+        if (findList.length > 0) {
+            req.sendData = {
+                status: 200,
+                data: findList,
+                message: 'ok',
+            };
+        } else {
+            req.sendData = {
+                status: 200,
+                message: 'todo not exist',
+            };
+        }
+        next();
+    };
     validById = async (_id, res) => {
         try {
             let findtodo = await todoModel.findById(_id);

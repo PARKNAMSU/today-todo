@@ -9,14 +9,19 @@ class TodoController {
     insertTodo = async (req, res) => {
         res.status(req.sendData.status).send(req.sendData);
     };
-    updateTodo = async (req, res, next) => {
+    updateTodo = async (req, res) => {
         res.status(req.sendData.status).send(req.sendData);
     };
-    completeTodo = async (req, res, next) => {
+    completeTodo = async (req, res) => {
         res.status(req.sendData.status).send(req.sendData);
     };
-    deleteTodo = async (req, res, next) => {};
-    getTodo = async (req, res, next) => {
+    deleteTodo = async (req, res, next) => {
+        res.status(req.sendData.status).send(req.sendData);
+    };
+    getTodo = async (req, res) => {
+        res.status(req.sendData.status).send(req.sendData);
+    };
+    getTodoList = async (req, res) => {
         res.status(req.sendData.status).send(req.sendData);
     };
 }
