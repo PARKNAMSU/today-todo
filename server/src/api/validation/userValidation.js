@@ -93,7 +93,11 @@ class UserValidation {
             let findUser = await userModel.findOne({
                 email: req.params.email,
             });
-            let compare = await bcrypt.compare(password, findUser.password);
+
+            let compare = null;
+            if (findUser)
+                compare = await bcrypt.compare(password, findUser.password);
+
             if (!findUser || !compare) {
                 res.status(400).send({
                     message: 'email or password not correct',
