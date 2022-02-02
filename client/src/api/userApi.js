@@ -17,4 +17,7 @@ export const userApi = {
             auth: accessToken,
         });
     },
+    logout: () => {
+        return api.get('/logout');
+    },
 };

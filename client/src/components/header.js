@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
     Switch,
@@ -7,6 +7,7 @@ import {
     Link,
     useNavigate,
 } from 'react-router-dom';
+import { userApi } from '../api/userApi';
 const TTHeaderTop = styled.div`
     width: 100%;
     position: fixed;
@@ -36,8 +37,12 @@ const TTNav = styled.nav`
 `;
 
 const LastDiv = styled.div`
-    width: 105px;
+    width: 110px;
     margin-left: auto;
+    & > div {
+        width: 110px;
+        position: absolute;
+    }
 `;
 const TTA = styled.button`
     color: #634b3e;
@@ -72,6 +77,7 @@ const TTA = styled.button`
   `
             : ''}
     ${(props) => (props.isLogin ? 'width:100%;  border-radius:0px;' : '')}
+    ${(props) => (props.isToggle ? '' : '')}
 `;
 document.addEventListener('scroll', function () {
     //   const header = document.querySelector(".headerDiv");
@@ -86,12 +92,18 @@ document.addEventListener('scroll', function () {
     //   }
 });
 
-const TTHeader = ({ isLogin, userInfo }) => {
+const TTHeader = ({ isLogin, userInfo, userInfoHandle }) => {
     let navigate = useNavigate();
     let [isLastButtonClick, setIsLastButtonClick] = useState(false);
     const lastButtonHandle = () => {
-        console.log(isLastButtonClick);
         setIsLastButtonClick(!isLastButtonClick);
+    };
+    const signOutHandle = async () => {
+        window.localStorage.clear();
+        await userApi.logout();
+        userInfoHandle({}, false);
+        setIsLastButtonClick(false);
+        navigate('/signin');
     };
     return (
         <TTHeaderTop className="headerDiv">
@@ -128,27 +140,27 @@ const TTHeader = ({ isLogin, userInfo }) => {
                                 {userInfo.name} 님
                             </TTA>
                         )}
-                        {isLastButtonClick ? ( // todo
-                            <TTA
-                                className="headerButton"
-                                isSignin={true}
-                                //onClick={lastButtonHandle}
-                                isLogin={true}
-                            >
-                                내정보
-                            </TTA>
-                        ) : (
-                            ''
-                        )}
                         {isLastButtonClick ? (
-                            <TTA
-                                className="headerButton"
-                                isSignin={true}
-                                //onClick={lastButtonHandle}
-                                isLogin={true}
-                            >
-                                logout
-                            </TTA>
+                            <div>
+                                <TTA
+                                    className="headerButton"
+                                    isSignin={true}
+                                    onClick={navigate.bind(null, '/userinfo')}
+                                    isLogin={true}
+                                    isToggle={true}
+                                >
+                                    내정보
+                                </TTA>
+                                <TTA
+                                    className="headerButton"
+                                    isSignin={true}
+                                    onClick={signOutHandle}
+                                    isLogin={true}
+                                    isToggle={true}
+                                >
+                                    logout
+                                </TTA>
+                            </div>
                         ) : (
                             ''
                         )}

@@ -134,6 +134,7 @@ class UserValidation {
         next();
     };
     logout = async (req, res, next) => {
+        console.log('logout');
         res.clearCookie('refreshToken');
         res.status(200).send({ message: 'ok' });
     };

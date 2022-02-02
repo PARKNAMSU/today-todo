@@ -20,6 +20,7 @@ function App() {
     const [userInfo, setUserInfo] = useState({});
     const [isLogin, setIsLogin] = useState(false);
 
+    useEffect(() => {}, [isLogin]);
     const userInfoHandle = (data, isLogin) => {
         setIsLogin(isLogin);
         setUserInfo(data);
@@ -27,7 +28,11 @@ function App() {
     return (
         <AppContainer>
             <BrowserRouter>
-                <TTHeader isLogin={isLogin} userInfo={userInfo}></TTHeader>
+                <TTHeader
+                    isLogin={isLogin}
+                    userInfo={userInfo}
+                    userInfoHandle={userInfoHandle}
+                ></TTHeader>
                 <Routes>
                     <Route
                         path="/"
